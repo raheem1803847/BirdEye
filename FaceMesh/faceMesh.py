@@ -27,30 +27,3 @@ with mp_face_mesh.FaceMesh(   ####use fun FaceMesh from object created
     # pass by reference.
     image.flags.writeable = False               ###no problem when remove
     results = face_mesh.process(image)
-
-    # Draw the face mesh annotations on the image.
-    image.flags.writeable = True                 ###no problem when remove
-    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    if results.multi_face_landmarks:
-      for face_landmarks in results.multi_face_landmarks:
-
-        mp_drawing.draw_landmarks(
-            image=image,
-            landmark_list=face_landmarks,
-            connections=mp_face_mesh.FACEMESH_TESSELATION,##FACEMESH_CONTOURS##FACEMESH_IRISES
-            landmark_drawing_spec=drawing_spec,
-            connection_drawing_spec=drawing_spec
-
-        )
-
-
-
-    currTime = time.time()
-    fps = 1 / (currTime - prevTime) ##frame rate
-    prevTime = currTime
-    cv2.putText(image, f'FPS: {int(fps)}', (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (0, 196, 255), 2)
-    cv2.imshow('MediaPipe FaceMesh', image)
-
-    if cv2.waitKey(5) & 0xFF == 27:
-      break
-cap.release
