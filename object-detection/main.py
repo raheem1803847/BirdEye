@@ -16,9 +16,9 @@ with open(classesFile, 'rt') as f:
 ## Model Files
 modelConfiguration = "yolov3-320.cfg"
 modelWeights = "yolov3.weights"
-net = cv.dnn.readNetFromDarknet(modelConfiguration, modelWeights)   #create network
-net.setPreferableBackend(cv.dnn.DNN_BACKEND_OPENCV)
-net.setPreferableTarget(cv.dnn.DNN_TARGET_CPU)
+net = cv2.dnn.readNetFromDarknet(modelConfiguration, modelWeights)   #create network
+net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
+net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
 
 
 def findObjects(outputs, img):
@@ -49,13 +49,13 @@ def findObjects(outputs, img):
         box = bbox[i]
         x,y,w,h= box [0],box[1],box[2],box[3]
         # print(x,y,w,h)
-        cv.rectangle(img, (x, y), (x + w, y + h), (255, 0, 255), 2)
-        cv.putText(img, f'{classNames [classIds[i]].upper()} {int(confs[i]*100)}%',
-        (x, y - 10), cv.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 255), 2)
+        cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 255), 2)
+        cv2.putText(img, f'{classNames [classIds[i]].upper()} {int(confs[i]*100)}%',
+        (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 255), 2)
 
 while True:
         success, img = cap.read()
-        blob = cv.dnn.blobFromImage(img, 1 / 255, (whT, whT), [0,0,0],1,crop=False)      ###network accept input in type blob, so change image to blob here ##whT, whT=>width and wight and target
+        blob = cv2.dnn.blobFromImage(img, 1 / 255, (whT, whT), [0,0,0],1,crop=False)      ###network accept input in type blob, so change image to blob here ##whT, whT=>width and wight and target
         net.setInput(blob)
         layersNames = net.getLayerNames()  ###names of all our layers(extraction layer , out put layers)
         outputNames=[]
@@ -64,5 +64,5 @@ while True:
         outputs = net.forward(outputNames)
         findObjects(outputs, img)
 
-        cv.imshow('Image', img)
-        cv.waitKey(1)                  ###delay in reading one milli sec
+        cv2.imshow('Image', img)
+        cv2.waitKey(1)                  ###delay in reading one milli sec
