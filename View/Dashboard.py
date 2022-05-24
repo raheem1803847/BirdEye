@@ -20,6 +20,14 @@ def relative_to_assets(path: str) -> Path:
 
 window = Tk()
 
+def nextPage1():
+    window.destroy()
+    import procoring
+
+def nextPage2():
+    window.destroy()
+    import exam
+
 window.geometry("1531x828")
 window.configure(bg = "#FFFFFF")
 
@@ -44,7 +52,7 @@ canvas.create_rectangle(
     outline="")
 
 image_image_1 = PhotoImage(
-    file=relative_to_assets("image_1.png"))
+    file=relative_to_assets("Dash_image_1.png"))
 image_1 = canvas.create_image(
     165.9999999999999,
     152.00000000000006,
@@ -69,12 +77,12 @@ canvas.create_rectangle(
     outline="")
 
 button_image_1 = PhotoImage(
-    file=relative_to_assets("button_1.png"))
+    file=relative_to_assets("Dash_button_1.png"))
 button_1 = Button(
     image=button_image_1,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_1 clicked"),
+    command=nextPage1,
     relief="flat"
 )
 button_1.place(
@@ -85,12 +93,12 @@ button_1.place(
 )
 
 button_image_2 = PhotoImage(
-    file=relative_to_assets("button_2.png"))
+    file=relative_to_assets("Dash_button_2.png"))
 button_2 = Button(
     image=button_image_2,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_2 clicked"),
+    command=nextPage1,
     relief="flat"
 )
 button_2.place(
@@ -101,12 +109,12 @@ button_2.place(
 )
 
 button_image_3 = PhotoImage(
-    file=relative_to_assets("button_3.png"))
+    file=relative_to_assets("Dash_button_3.png"))
 button_3 = Button(
     image=button_image_3,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_3 clicked"),
+    command=nextPage2,
     relief="flat"
 )
 button_3.place(
@@ -117,12 +125,12 @@ button_3.place(
 )
 
 button_image_4 = PhotoImage(
-    file=relative_to_assets("button_4.png"))
+    file=relative_to_assets("Dash_button_4.png"))
 button_4 = Button(
     image=button_image_4,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_4 clicked"),
+    command=nextPage2,
     relief="flat"
 )
 button_4.place(

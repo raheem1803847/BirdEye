@@ -20,6 +20,10 @@ def relative_to_assets(path: str) -> Path:
 
 window = Tk()
 
+def nextPage():
+    window.destroy()
+    import Dashboard
+
 window.geometry("1531x828")
 window.configure(bg = "#FFFFFF")
 
@@ -36,15 +40,15 @@ canvas = Canvas(
 
 canvas.place(x = 0, y = 0)
 canvas.create_rectangle(
+    3.0,
     0.0,
-    0.0,
-    1531.0,
+    1534.0,
     828.0,
     fill="#023E8A",
     outline="")
 
 image_image_1 = PhotoImage(
-    file=relative_to_assets("image_1.png"))
+    file=relative_to_assets("in_image_1.png"))
 image_1 = canvas.create_image(
     166.0,
     152.0,
@@ -70,15 +74,6 @@ canvas.create_text(
 )
 
 canvas.create_text(
-    362.0,
-    452.0,
-    anchor="nw",
-    text="CONFIRM",
-    fill="#FFFFFF",
-    font=("Montserrat Light", 24 * -1)
-)
-
-canvas.create_text(
     359.0,
     257.0,
     anchor="nw",
@@ -88,42 +83,34 @@ canvas.create_text(
 )
 
 image_image_2 = PhotoImage(
-    file=relative_to_assets("image_2.png"))
+    file=relative_to_assets("in_image_2.png"))
 image_2 = canvas.create_image(
     513.0,
     370.0,
     image=image_image_2
 )
 
-image_image_3 = PhotoImage(
-    file=relative_to_assets("image_3.png"))
-image_3 = canvas.create_image(
-    505.0,
-    465.0,
-    image=image_image_3
-)
-
 button_image_1 = PhotoImage(
-    file=relative_to_assets("button_1.png"))
+    file=relative_to_assets("in_button_1.png"))
 button_1 = Button(
     image=button_image_1,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_1 clicked"),
+    command=nextPage,
     relief="flat"
 )
 button_1.place(
     x=556.0,
-    y=556.0,
+    y=474.0,
     width=420.0,
     height=81.0
 )
 
 entry_image_1 = PhotoImage(
-    file=relative_to_assets("entry_1.png"))
+    file=relative_to_assets("in_entry_1.png"))
 entry_bg_1 = canvas.create_image(
     766.0,
-    372.2620048522949,
+    372.2620086669922,
     image=entry_image_1
 )
 entry_1 = Entry(
@@ -135,14 +122,14 @@ entry_1.place(
     x=561.0,
     y=337.4803466796875,
     width=410.0,
-    height=67.56331634521484
+    height=67.56332397460938
 )
 
 entry_image_2 = PhotoImage(
-    file=relative_to_assets("entry_2.png"))
+    file=relative_to_assets("in_entry_2.png"))
 entry_bg_2 = canvas.create_image(
     766.0,
-    472.7816581726074,
+    271.7816619873047,
     image=entry_image_2
 )
 entry_2 = Entry(
@@ -152,36 +139,17 @@ entry_2 = Entry(
 )
 entry_2.place(
     x=561.0,
-    y=438.0,
-    width=410.0,
-    height=67.56331634521484
-)
-
-entry_image_3 = PhotoImage(
-    file=relative_to_assets("entry_3.png"))
-entry_bg_3 = canvas.create_image(
-    766.0,
-    271.7816581726074,
-    image=entry_image_3
-)
-entry_3 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    highlightthickness=0
-)
-entry_3.place(
-    x=561.0,
     y=237.0,
     width=410.0,
-    height=67.56331634521484
+    height=67.56332397460938
 )
 
-image_image_4 = PhotoImage(
-    file=relative_to_assets("image_4.png"))
-image_4 = canvas.create_image(
+image_image_3 = PhotoImage(
+    file=relative_to_assets("in_image_3.png"))
+image_3 = canvas.create_image(
     509.0,
     270.0,
-    image=image_image_4
+    image=image_image_3
 )
 window.resizable(False, False)
 window.mainloop()
