@@ -14,21 +14,27 @@ OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
 
 
+
+
 def login():
     # Establish Connection
-    with sqlite3.connect('Model/database.db') as db:
-        c = db.cursor()
-    username = entry_2.get()
-    password = entry_1.get()
 
-    # Find user If there is any take proper action
-    find_user = ('SELECT * FROM accounts WHERE user_name = ? and password = ?')
-    c.execute(find_user, [(username), (password)])
-    result = c.fetchall()
-    if result:
-        nextPage()
+    if (entry_2.get() == '' or entry_1.get() == ''):
+        ms.showinfo('Error!', 'check entries for missing!')
     else:
-        ms.showerror('Oops!', 'Username or password are wrong.')
+        with sqlite3.connect('Model/database.db') as db:
+            c = db.cursor()
+        username = entry_2.get()
+        password = entry_1.get()
+
+        # Find user If there is any take proper action
+        find_user = ('SELECT * FROM accounts WHERE user_name = ? and password = ?')
+        c.execute(find_user, [(username), (password)])
+        result = c.fetchall()
+        if result:
+            nextPage()
+        else:
+            ms.showerror('Oops!', 'Username or password are wrong.')
 
 
 def relative_to_assets(path: str) -> Path:
