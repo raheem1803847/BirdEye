@@ -33,7 +33,7 @@ def new_user():
             c.execute(find_user, [(n_username)])
             if c.fetchall():
                 ms.showerror('Error!', 'Username Taken Try a Diffrent One.')
-                
+
             else:
                 insert = 'INSERT INTO accounts (user_name,password) VALUES(?,?)'
                 c.execute(insert, [(n_username), (n_password)])

@@ -13,10 +13,10 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
 
+
 def nextPage():
     window.destroy()
-    import Dashboard
-
+    import exam
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
@@ -48,24 +48,42 @@ canvas.create_rectangle(
     outline="")
 
 canvas.create_rectangle(
-    227.9999999999999,
-    41.00000000000006,
+    228.0,
+    41.0,
     1304.0,
     828.0,
     fill="#FFFFFF",
     outline="")
 
 canvas.create_text(
-    647.9999999999999,
-    41.00000000000006,
+    648.0,
+    41.0,
     anchor="nw",
-    text="EXAM",
+    text="Course name",
     fill="#000000",
     font=("Satisfy Regular", 64 * -1)
 )
 
+canvas.create_text(
+    242.0,
+    304.0,
+    anchor="nw",
+    text="Please make sure you have all what you want in exam before starting, be ware that using the mobile illegal.  ",
+    fill="#000000",
+    font=("Satisfy Regular", 26 * -1)
+)
+
+canvas.create_text(
+    246.0,
+    361.0,
+    anchor="nw",
+    text="Exam time : 1 hour",
+    fill="#000000",
+    font=("Satisfy Regular", 26 * -1)
+)
+
 button_image_1 = PhotoImage(
-    file=relative_to_assets("exam_button_1.png"))
+    file=relative_to_assets("bef_button_1.png"))
 button_1 = Button(
     image=button_image_1,
     borderwidth=0,
@@ -74,10 +92,10 @@ button_1 = Button(
     relief="flat"
 )
 button_1.place(
-    x=1359.0,
-    y=701.0,
-    width=163.0,
-    height=99.0
+    x=717.0,
+    y=711.0,
+    width=170.0,
+    height=111.0
 )
 window.resizable(False, False)
 window.mainloop()

@@ -139,7 +139,8 @@ entry_bg_1 = canvas.create_image(
 entry_1 = Entry(
     bd=0,
     bg="#FFFFFF",
-    highlightthickness=0
+    highlightthickness=0,
+    show='*'
 )
 entry_1.place(
     x=561.0,

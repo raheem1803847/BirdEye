@@ -27,7 +27,9 @@ c = conn.cursor()
 
 
 #% means start with Alaa then end by any thing
+#c.execute("DELETE FROM accounts")
 c.execute("SELECT * FROM accounts ")
+
 print(c.fetchall())
 
 

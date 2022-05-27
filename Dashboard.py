@@ -26,7 +26,7 @@ def nextPage1():
 
 def nextPage2():
     window.destroy()
-    import exam
+    import before_exam
 
 window.geometry("1531x828")
 window.configure(bg = "#FFFFFF")
