@@ -31,16 +31,16 @@ def new_user():
             # Find Existing username if any take proper action
             find_user = ('SELECT user_name FROM accounts WHERE user_name = ?')
             c.execute(find_user, [(n_username)])
-            if c.fetchall() != 1:
-
+            if c.fetchall():
+                ms.showerror('Error!', 'Username Taken Try a Diffrent One.')
+                
+            else:
                 insert = 'INSERT INTO accounts (user_name,password) VALUES(?,?)'
                 c.execute(insert, [(n_username), (n_password)])
                 db.commit()
                 ms.showinfo('Success!', 'Account Created!')
                 nextPage()
 
-            else:
-                ms.showerror('Error!', 'Username Taken Try a Diffrent One.')
 
             # Create New Account
 
