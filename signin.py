@@ -32,7 +32,14 @@ def login():
         c.execute(find_user, [(username), (password)])
         result = c.fetchall()
         if result:
-            nextPage()
+            find_user = ('SELECT * FROM accounts WHERE user_name = ? and user_type="student"')
+            c.execute(find_user, [(username)])
+            result2 = c.fetchall()
+            if result2:
+                nextPage_student()
+            else:
+                nextPage_proctor()
+
         else:
             ms.showerror('Oops!', 'Username or password are wrong.')
 
@@ -43,9 +50,14 @@ def relative_to_assets(path: str) -> Path:
 
 window = Tk()
 
-def nextPage():
+def nextPage_student():
     window.destroy()
-    import Dashboard
+    import Dashboard_student
+
+def nextPage_proctor():
+    window.destroy()
+    import Dashboard_proctor
+
 
 window.geometry("1531x828")
 window.configure(bg = "#FFFFFF")

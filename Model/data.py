@@ -12,13 +12,14 @@ c = conn.cursor()
 
 #c.execute("""CREATE TABLE accounts (
 #        user_name text,
-#        password text
+#        password text ,
+#        user_type text
 #
 #        )""")
 #
 
 #insert one record
-#c.execute("INSERT INTO accounts VALUES( 'Alaa','12345678')")
+#c.execute("INSERT INTO accounts VALUES( 'Alaa','12345678','student')")
 #------------------------------------------------
 #c.execute("SELECT * FROM accounts")
 #print(c.fetchall())
@@ -29,6 +30,7 @@ c = conn.cursor()
 #% means start with Alaa then end by any thing
 #c.execute("DELETE FROM accounts")
 c.execute("SELECT * FROM accounts ")
+
 
 print(c.fetchall())
 

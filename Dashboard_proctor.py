@@ -20,13 +20,11 @@ def relative_to_assets(path: str) -> Path:
 
 window = Tk()
 
-def nextPage1():
+def nextPage():
     window.destroy()
     import procoring
 
-def nextPage2():
-    window.destroy()
-    import before_exam
+
 
 window.geometry("1531x828")
 window.configure(bg = "#FFFFFF")
@@ -82,7 +80,7 @@ button_1 = Button(
     image=button_image_1,
     borderwidth=0,
     highlightthickness=0,
-    command=nextPage1,
+    command=nextPage,
     relief="flat"
 )
 button_1.place(
@@ -91,53 +89,53 @@ button_1.place(
     width=338.0,
     height=215.0
 )
-
-button_image_2 = PhotoImage(
-    file=relative_to_assets("Dash_button_2.png"))
-button_2 = Button(
-    image=button_image_2,
-    borderwidth=0,
-    highlightthickness=0,
-    command=nextPage1,
-    relief="flat"
-)
-button_2.place(
-    x=853.9999999999999,
-    y=372.00000000000006,
-    width=338.0,
-    height=215.0
-)
-
-button_image_3 = PhotoImage(
-    file=relative_to_assets("Dash_button_3.png"))
-button_3 = Button(
-    image=button_image_3,
-    borderwidth=0,
-    highlightthickness=0,
-    command=nextPage2,
-    relief="flat"
-)
-button_3.place(
-    x=437.9999999999999,
-    y=372.00000000000006,
-    width=338.0,
-    height=215.0
-)
-
-button_image_4 = PhotoImage(
-    file=relative_to_assets("Dash_button_4.png"))
-button_4 = Button(
-    image=button_image_4,
-    borderwidth=0,
-    highlightthickness=0,
-    command=nextPage2,
-    relief="flat"
-)
-button_4.place(
-    x=853.9999999999999,
-    y=116.00000000000006,
-    width=338.0,
-    height=215.0
-)
+#
+#button_image_2 = PhotoImage(
+#    file=relative_to_assets("Dash_button_2.png"))
+#button_2 = Button(
+#    image=button_image_2,
+#    borderwidth=0,
+#    highlightthickness=0,
+#    command=nextPage,
+#    relief="flat"
+#)
+#button_2.place(
+#    x=853.9999999999999,
+#    y=372.00000000000006,
+#    width=338.0,
+#    height=215.0
+#)
+#
+#button_image_3 = PhotoImage(
+#    file=relative_to_assets("Dash_button_3.png"))
+#button_3 = Button(
+#    image=button_image_3,
+#    borderwidth=0,
+#    highlightthickness=0,
+#    command=nextPage,
+#    relief="flat"
+#)
+#button_3.place(
+#    x=437.9999999999999,
+#    y=372.00000000000006,
+#    width=338.0,
+#    height=215.0
+#)
+#
+#button_image_4 = PhotoImage(
+#    file=relative_to_assets("Dash_button_4.png"))
+#button_4 = Button(
+#    image=button_image_4,
+#    borderwidth=0,
+#    highlightthickness=0,
+#    command=nextPage,
+#    relief="flat"
+#)
+#button_4.place(
+#    x=853.9999999999999,
+#    y=116.00000000000006,
+#    width=338.0,
+#    height=215.0
+#)
 window.resizable(False, False)
 window.mainloop()

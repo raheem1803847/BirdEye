@@ -15,7 +15,7 @@ ASSETS_PATH = OUTPUT_PATH / Path("./assets")
 
 def nextPage():
     window.destroy()
-    import Dashboard
+    import Dashboard_student
 
 
 def relative_to_assets(path: str) -> Path:
