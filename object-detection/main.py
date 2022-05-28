@@ -1,3 +1,4 @@
+
 import cv2 as cv
 import numpy as np
 
@@ -38,7 +39,9 @@ def findObjects(outputs, img):
                 x, y=int((det [0]*wT)-w/2) , int((det[1]*hT)-h/2)
                 bbox.append( [x,y,w,h])
                 if classId==67:
-                    print('alert!!!')
+                    print('cell phone alert!!! ')
+                if classId==0:
+                    print('anther person alert!!! ')
                 classIds.append(classId)
                 confs.append(float(confidence))
 
