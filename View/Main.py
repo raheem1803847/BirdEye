@@ -26,6 +26,7 @@ import sounddevice as sd
 from scipy.io.wavfile import write
 import wavio as wv
 import sys
+import cv2 as cv
 
 
 
@@ -35,6 +36,7 @@ warnings.filterwarnings("ignore")
 def midpoint(p1 ,p2):
     return int((p1.x + p2.x)/2), int((p1.y + p2.y)/2)
 font = cv2.FONT_HERSHEY_PLAIN
+
 whT = 320
 confThreshold = 0.5
 nmsThreshold = 0.2
@@ -49,6 +51,7 @@ modelWeights = "yolov3.weights"
 net = cv2.dnn.readNetFromDarknet(modelConfiguration, modelWeights)   #create network
 net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
 net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
+
 
 
 # # Face detection
@@ -372,7 +375,7 @@ while True:
     if stream_ok:
         # write frame to the video file
         video.write(frame)
-    #cv2.imshow("Frame", frame)
+    cv2.imshow("Frame", frame)
 
     key = cv2.waitKey(1)
     if key == 27:
