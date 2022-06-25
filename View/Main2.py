@@ -28,15 +28,21 @@ import wavio as wv
 import sys
 import cv2 as cv
 import concurrent.futures
+import numpy as np
+from datetime import datetime
+from reportlab.pdfgen.canvas import Canvas
+#
+now = datetime.now()
+
+cheating = []
+
+# newselect = cheating.append(["aaaa","type"])
+# newselect2= a.append(["bbbb","type"])
+# print(a)
 
 
-
-# In[10]:
 
 warnings.filterwarnings("ignore")
-def midpoint(p1 ,p2):    #facemesh
-    return int((p1.x + p2.x)/2), int((p1.y + p2.y)/2)
-
 
 
 font = cv2.FONT_HERSHEY_PLAIN
@@ -58,12 +64,44 @@ net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
 
 
 
+# # Face detection
+
+# In[11]:
+
+
 detector=dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 model = load_model('facefeatures_new_model.h5')
 
 # Loading the cascades
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+def face_extractor(img):#done
+    # Function detects faces and returns the cropped face
+    # If no face detected, it returns the input image
+
+    #gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(img, 1.3, 5)
+    counter=0
+
+    if faces == ():
+        return None
+
+    # Crop all faces found
+    for (x,y,w,h) in faces:
+        cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,255),2)
+        cropped_face = img[y:y+h, x:x+w]
+        counter = counter + 1
+        if counter >= 2:
+            print("more than one person found")
+            current_time = now.strftime("%H:%M:%S")
+            cheating.append(["more than one person found", current_time])#type-time
+
+
+    return cropped_face
+
+
+
 
 def get_gaze_ratio(eye_points, facial_landmarks):#done#eye tracking
     left_eye_region = np.array([(facial_landmarks.part(eye_points[0]).x, facial_landmarks.part(eye_points[0]).y),
@@ -103,6 +141,11 @@ def get_gaze_ratio(eye_points, facial_landmarks):#done#eye tracking
     return gaze_ratio
 
 
+# # Face gestures
+
+# In[13]:
+
+
 import cv2
 import math
 class mpFaceMesh:
@@ -111,7 +154,7 @@ class mpFaceMesh:
         self.myFaceMesh=self.mp.solutions.face_mesh.FaceMesh()
         self.myDraw=self.mp.solutions.drawing_utils
         self.draw=drawMesh
-    def Marks(self,frame,frame2):
+    def Marks(self,frame):
         global width
         global height
         drawSpecCircle=self.myDraw.DrawingSpec(thickness=0,circle_radius=0,color=(0,0,255))
@@ -143,8 +186,12 @@ class mpFaceMesh:
 
                 if left_length<200:
                     print("looking right")
+                    current_time = now.strftime("%H:%M:%S")
+                    cheating.append(["looking right", current_time])  # type-time
                 if left_length>360:
                     print("looking left")
+                    current_time = now.strftime("%H:%M:%S")
+                    cheating.append(["looking left", current_time])  # type-time
                 # if upLeft_length<200:
                 #     print("looking up left")
                 # if upRight_length<200:
@@ -154,12 +201,7 @@ class mpFaceMesh:
 
                 if self.draw==True:
                     self.myDraw.draw_landmarks(frame,faceMesh,self.mp.solutions.face_mesh.FACEMESH_TESSELATION,drawSpecCircle,drawSpecLine)
-
-            return facesMeshLandmarks
-
-        else:
-            return cv2.putText(frame2, "No Face Found", (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
-
+        return facesMeshLandmarks
 
 class mpFace:   ###read the face and get the topLeft/bottomRight of detection box
     import mediapipe as mp
@@ -204,6 +246,10 @@ findFace=mpFace()
 findMesh=mpFaceMesh(drawMesh=True)
 
 
+# # object detection
+
+# In[14]:
+
 
 def findObjects(outputs, img):
     hT, wT, cT = img.shape
@@ -222,7 +268,10 @@ def findObjects(outputs, img):
                 x, y=int((det [0]*wT)-w/2) , int((det[1]*hT)-h/2)
                 bbox.append( [x,y,w,h])
                 if classId==67:
-                    print('cell phone alert!!!')
+                    print('cell phone detection')
+                    current_time = now.strftime("%H:%M:%S")
+                    cheating.append(["cell phone detection", current_time])  # type-time
+
                 classIds.append(classId)
                 confs.append(float(confidence))
 
@@ -237,6 +286,15 @@ def findObjects(outputs, img):
         cv2.putText(img, f'{classNames [classIds[i]].upper()} {int(confs[i]*100)}%',
         (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 255), 2)
 
+
+
+
+# # Screen recording
+
+# In[15]:
+
+
+# Specify resolution
 resolution = (1920, 1080)
 
 # Specify video codec
@@ -245,7 +303,7 @@ codec = cv2.VideoWriter_fourcc(*"XVID")
 # Specify name of Output file
 filename = "Recording.avi"
 
-# Specify frames rate. We can choose any
+# Specify frames rate. We can choose any 
 # value and experiment with it
 fps = 10.0
 # Creating a VideoWriter object
@@ -257,13 +315,15 @@ out = cv2.VideoWriter(filename, codec, fps, resolution)
 # In[26]:
 
 t1=time.time()
-# face=multiprocessing.Process(target=face_extractor)
+face=threading.Thread(target=face_extractor)
 eye=threading.Thread(target=get_gaze_ratio)
 obj=threading.Thread(target=findObjects)
-# face.start()
+face.start()
 eye.start()
 obj.start()
 
+face.join()
+eye.join()
 
 # In[ ]:
 t2=time.time()
@@ -279,21 +339,23 @@ while True:
     #image, face =face_detector(frame)
     new_frame = np.zeros((500, 500, 3), np.uint8)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    facesMeshLM=findMesh.Marks(frame2,frame)
+    facesMeshLM=findMesh.Marks(frame2)
     faces = detector(gray)
-    # face=face_extractor(frame)
-    # if type(face) is np.ndarray:
-    #     face = cv2.resize(face, (224, 224))
-    #     im = Image.fromarray(face, 'RGB')
-    #        #Resizing into 128x128 because we trained the model with this image size.
-    #     img_array = np.array(im)
-    #                 #Our keras model used a 4D tensor, (images x height x width x channel)
-    #                 #So changing dimension 128x128x3 into 1x128x128x3
-    #     img_array = np.expand_dims(img_array, axis=0)
-    #
+    face=face_extractor(frame)
+    if type(face) is np.ndarray:
+        face = cv2.resize(face, (224, 224))
+        im = Image.fromarray(face, 'RGB')
+           #Resizing into 128x128 because we trained the model with this image size.
+        img_array = np.array(im)
+                    #Our keras model used a 4D tensor, (images x height x width x channel)
+                    #So changing dimension 128x128x3 into 1x128x128x3
+        img_array = np.expand_dims(img_array, axis=0)
 
-    # else:
-    #  cv2.putText(frame,"No Face Found",(50,50),cv2.FONT_HERSHEY_COMPLEX,1,(0,255,0),2)##############################
+
+    else:
+     cv2.putText(frame,"No Face Found",(50,50),cv2.FONT_HERSHEY_COMPLEX,1,(0,255,0),2)
+     current_time = now.strftime("%H:%M:%S")
+     cheating.append(["No Face Found", current_time])  # type-time
 
     for face in faces:#eye
         landmarks = predictor(gray, face)
@@ -303,9 +365,13 @@ while True:
         gaze_ratio = (gaze_ratio_right_eye + gaze_ratio_left_eye) / 2
         if gaze_ratio <= 1:
             cv2.putText(frame, "RIGHT", (50, 100), font, 2, (0, 0, 255), 3)
+            current_time = now.strftime("%H:%M:%S")
+            cheating.append(["looking right", current_time])  # type-time
             new_frame[:] = (0, 0, 255)
         elif 1 < gaze_ratio < 2.11:
             cv2.putText(frame, "Left", (50, 100), font, 2, (0, 0, 255), 3)
+            current_time = now.strftime("%H:%M:%S")
+            cheating.append(["looking left", current_time])  # type-time
         else:
             new_frame[:] = (255, 0, 0)
             cv2.putText(frame, "CENTER", (50, 100), font, 2, (0, 0, 255), 3)
@@ -344,6 +410,7 @@ while True:
     if key == 27:
         break
 
+print(cheating)
 
 
 video_capture.release()
