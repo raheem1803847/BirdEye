@@ -1,0 +1,128 @@
+* , html {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-family: 'Cairo', sans-serif;
+}
+
+html {
+    background-color: #1b1b1b;
+}
+.btn{
+  align-items: center;
+  appearance: none;
+  background-color: white;
+  background-image: linear-gradient(1deg, black, #000000 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  border-radius: 100px;
+  border-width: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: CircularStd,sans-serif;
+  font-size: 1rem;
+  height: auto;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 6px 20px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .2s,background-position .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.btn:active,
+.btn:focus {
+  outline: none;
+}
+
+.btn:hover {
+  background-position: -20px -20px;
+}
+
+.btn:focus:not(:active) {
+  box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 .125em;
+}
+
+
+
+.flex {
+    display: flex;
+}
+
+.fl-1 {
+    flex: 1;
+}
+
+.fl-2 {
+    flex: 2;
+}
+
+.aside {
+    width: 100%;
+    padding: 15px 20px;
+    height: 100vh;
+    font-size: 20px;
+}
+
+.step {
+    font-size: 16px;
+    margin: 1px 0;
+    width: 100%;
+    transition: .3s all;
+    padding: 5px 5px;
+    border-radius: 1px;
+}
+
+.step:hover {
+  
+    border-left: 2px solid #00acee;
+    cursor: pointer;
+}
+
+.step-container {
+    margin: 20px;
+    padding: 10px;
+}
+
+.step-container h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.step-container p {
+    width: 100%;
+    color: #777;
+    margin-top: 30px;
+}
+
+.mt-30 {
+    margin-top: 30px !important;
+}
+
+.record-btn {
+    padding: 8px 15px;
+    border-radius: 3px;
+    background-color: #292929;
+    color: white;
+    transition: .3s all;
+    outline: 0;
+    margin-right: 40px;
+    border: 0;
+    cursor: pointer;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
